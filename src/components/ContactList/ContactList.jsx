@@ -11,15 +11,6 @@ const MyPhoneList = ({ items, deleteContact }) => {
   ));
   return (
     <>
-      {/* <div className={styles.filter}>
-        <label htmlFor="filterID">Find contacts by name</label>
-        <input
-          onChange={changeFilter}
-          id="filterID"
-          name="filter"
-          placeholder="Search"
-        />
-      </div> */}
       <ul className={styles.list}>{elements}</ul>
     </>
   );
