@@ -1,0 +1,13 @@
+.phonebook {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  border: 1px solid;
+  width: 240px;
+  gap: 10px;
+}
+.phonebtn {
+  margin-top: 15px;
+  border-radius: 6px;
+  width: 120px;
+}
