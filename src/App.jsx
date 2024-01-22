@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { nanoid } from 'nanoid';
 import ContactForm from './components/ContactForm/ContactForm';
 import ContactList from './components/ContactList/ContactList';
@@ -13,9 +13,17 @@ const App = () => {
   });
   const [filter, setFilter] = useState('');
 
+  const firstRender = useRef(true);
+
   useEffect(() => {
-    localStorage.setItem('my-contacts', JSON.stringify(contacts));
+    if (!firstRender.current) {
+      localStorage.setItem('my-contacts', JSON.stringify(contacts));
+    }
   }, [contacts]);
+
+  useEffect(() => {
+    firstRender.current = false;
+  }, []);
 
   const isDublicate = ({ name }) => {
     const normolizedName = name.toLowerCase();
