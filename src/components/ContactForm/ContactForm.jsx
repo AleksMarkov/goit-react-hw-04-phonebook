@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, memo, useCallback } from 'react';
 import { nanoid } from 'nanoid';
 
 import styles from './contact-form.module.css';
@@ -11,11 +11,11 @@ const INITIAL_STATE = {
 const ContactForm = ({ onSubmit }) => {
   const [state, setState] = useState({ ...INITIAL_STATE });
 
-  const handleChange = ({ target }) => {
+  const handleChange = useCallback(({ target }) => {
     const { name, value } = target;
 
-    setState({ ...state, [name]: value });
-  };
+    setState(prevState => ({ ...prevState, [name]: value }));
+  }, []);
 
   const handleSubmit = evt => {
     evt.preventDefault();
@@ -25,9 +25,9 @@ const ContactForm = ({ onSubmit }) => {
     reset();
   };
 
-  const reset = () => {
+  const reset = useCallback(() => {
     setState({ ...INITIAL_STATE });
-  };
+  }, []);
 
   const phoneBookID = useMemo(() => nanoid(), []);
   const phoneNumberID = useMemo(() => nanoid(), []);
@@ -65,4 +65,4 @@ const ContactForm = ({ onSubmit }) => {
   );
 };
 
-export default ContactForm;
+export default memo(ContactForm);

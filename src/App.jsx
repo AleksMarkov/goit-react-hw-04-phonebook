@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { nanoid } from 'nanoid';
 import ContactForm from './components/ContactForm/ContactForm';
 import ContactList from './components/ContactList/ContactList';
@@ -34,7 +34,7 @@ const App = () => {
     return Boolean(dublicate);
   };
 
-  const addContact = data => {
+  const addContact = useCallback(data => {
     if (isDublicate(data)) {
       return alert(` ${data.name} is already in contacts`);
     }
@@ -42,15 +42,15 @@ const App = () => {
       const newContact = { id: nanoid(), ...data };
       return [...prevContacts, newContact];
     });
-  };
+  }, []);
 
-  const deleteContact = id => {
+  const deleteContact = useCallback(id => {
     setContacts(prevContacts => prevContacts.filter(item => item.id !== id));
-  };
+  }, []);
 
-  const changeFilter = ({ target }) => {
+  const changeFilter = useCallback(({ target }) => {
     setFilter(target.value);
-  };
+  }, []);
 
   const getFilteredContacts = () => {
     if (!filter) {
